@@ -65,25 +65,23 @@ class _SearchState extends State<Search> {
                 ),
                 margin: EdgeInsets.symmetric(horizontal: 24.0),
                 padding: EdgeInsets.symmetric(horizontal: 24.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: searchController,
-                        decoration: InputDecoration(
-                            hintText: "Search Wallpaper",
-                            border: InputBorder.none),
-                      ),
+                child: Row(children: [
+                  Expanded(
+                    child: TextField(
+                      controller: searchController,
+                      decoration: InputDecoration(
+                          hintText: "Search Wallpaper",
+                          border: InputBorder.none),
                     ),
-                    GestureDetector(
-                        onTap: () {
-                          getSearchWallpapers(searchController.text);
-                        },
-                        child: Container(
-                          child: Icon(Icons.search),
-                        )),
-                  ],
-                ),
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        getSearchWallpapers(searchController.text);
+                      },
+                      child: Container(
+                        child: Icon(Icons.search),
+                      )),
+                ]),
               ),
               SizedBox(height: 16),
               wallpapersList(wallpapers: wallpapers, context: context),
