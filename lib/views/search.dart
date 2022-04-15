@@ -1,11 +1,9 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
 import '../data/data.dart';
 import '../model/wallpaper_model.dart';
 import '../widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Search extends StatefulWidget {
   late final String searchQuery;
@@ -24,7 +22,7 @@ class _SearchState extends State<Search> {
 
   getSearchWallpapers(String query) async {
     var url = Uri.parse(
-        "https://api.pexels.com/v1/search?query=$query&per_page=15&page=1");
+        "https://api.pexels.com/v1/search?query=$query&per_page=20&page=1");
     var responce = await http.get(url, headers: {"Authorization": apiKey});
 
     Map<String, dynamic> jsonData = jsonDecode(responce.body);
@@ -49,10 +47,15 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: brandName(),
         backgroundColor: Colors.white,
         elevation: 0.0,
+        centerTitle: true,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(

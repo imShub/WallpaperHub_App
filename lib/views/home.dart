@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wallpaperhub_app/data/data.dart';
 import 'package:wallpaperhub_app/model/categories_model.dart';
 import 'package:wallpaperhub_app/model/wallpaper_model.dart';
+import 'package:wallpaperhub_app/views/categorie.dart';
 import 'package:wallpaperhub_app/views/search.dart';
 import 'package:wallpaperhub_app/widgets/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -49,7 +50,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: brandName(),
+        title: Center(child: brandName()),
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
@@ -91,6 +92,22 @@ class _HomeState extends State<Home> {
                 ),
               ),
               SizedBox(height: 16),
+              RichText(
+                text: TextSpan(
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                  children: const <TextSpan>[
+                    TextSpan(
+                        text: 'Made By ',
+                        style: TextStyle(color: Colors.black54)),
+                    TextSpan(
+                        text: 'Shubham Waghmare',
+                        style: TextStyle(color: Colors.blue)),
+                  ],
+                ),
+              ),
+              SizedBox(height: 16),
               Container(
                 height: 80,
                 child: ListView.builder(
@@ -123,30 +140,40 @@ class CategorieTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 8),
-      decoration: BoxDecoration(),
-      child: Stack(
-        children: [
-          ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(imgUrl,
-                  height: 50, width: 100, fit: BoxFit.cover)),
-          Container(
-              decoration: BoxDecoration(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Categorie(categoryName: title.toLowerCase()),
+          ),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.only(right: 8),
+        decoration: BoxDecoration(),
+        child: Stack(
+          children: [
+            ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.black26,
-              ),
-              alignment: Alignment.center,
-              height: 50,
-              width: 100,
-              child: Text(title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                  ))),
-        ],
+                child: Image.network(imgUrl,
+                    height: 50, width: 100, fit: BoxFit.cover)),
+            Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black38,
+                ),
+                alignment: Alignment.center,
+                height: 50,
+                width: 100,
+                child: Text(title,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ))),
+          ],
+        ),
       ),
     );
   }

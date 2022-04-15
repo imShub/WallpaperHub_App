@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:wallpaperhub_app/views/image_view.dart';
 
 import '../model/wallpaper_model.dart';
 
 Widget brandName() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Text(
-        "Wallpaper",
-        style: TextStyle(color: Colors.black87),
-        textAlign: TextAlign.center,
+  return RichText(
+    text: TextSpan(
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w500,
       ),
-      Text(
-        "Hub",
-        style: TextStyle(color: Colors.blue),
-      )
-    ],
+      children: const <TextSpan>[
+        TextSpan(text: 'Wallpaper', style: TextStyle(color: Colors.black)),
+        TextSpan(text: 'Hub', style: TextStyle(color: Colors.blue)),
+      ],
+    ),
   );
 }
 
@@ -31,12 +30,25 @@ Widget wallpapersList({required List<WallpaperModel> wallpapers, context}) {
       crossAxisSpacing: 6.0,
       children: wallpapers.map((wallpaper) {
         return GridTile(
+            child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ImageView(imgUrl: wallpaper.src.portrait),
+                ));
+          },
+          child: Hero(
+            tag: wallpaper.src.portrait,
             child: Container(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Image.network(
-              wallpaper.src.portrait,
-              fit: BoxFit.cover,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.network(
+                  wallpaper.src.portrait,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
         ));
