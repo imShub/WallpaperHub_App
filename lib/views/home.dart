@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:wallpaperhub_app/data/data.dart';
 import 'package:wallpaperhub_app/model/categories_model.dart';
 import 'package:wallpaperhub_app/model/wallpaper_model.dart';
 import 'package:wallpaperhub_app/views/categorie.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wallpaperhub_app/views/search.dart';
 import 'package:wallpaperhub_app/widgets/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -43,6 +42,13 @@ class _HomeState extends State<Home> {
     getTrendingWallpapers();
     categories = getCategories();
     super.initState();
+
+    _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -92,20 +98,45 @@ class _HomeState extends State<Home> {
                 ),
               ),
               SizedBox(height: 16),
-              RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    fontSize: 14,
+              // RichText(
+              //   text: TextSpan(
+              //     style: TextStyle(
+              //       fontSize: 14,
+              //     ),
+              //     children: const <TextSpan>[
+              //       TextSpan(
+              //           text: 'Made By ',
+              //           style: TextStyle(color: Colors.black54)),
+              //       TextSpan(
+              //           text: 'Shubham Waghmare',
+              //           style: TextStyle(color: Colors.blue)),
+              //     ],
+              //   ),
+              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Made By ",
+                    style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 14,
+                        fontFamily: 'Overpass'),
                   ),
-                  children: const <TextSpan>[
-                    TextSpan(
-                        text: 'Made By ',
-                        style: TextStyle(color: Colors.black54)),
-                    TextSpan(
-                        text: 'Shubham Waghmare',
-                        style: TextStyle(color: Colors.blue)),
-                  ],
-                ),
+                  GestureDetector(
+                    onTap: () {
+                      _launchURL("https://www.linkedin.com/in/lamsanskar/");
+                    },
+                    child: Container(
+                        child: Text(
+                      "Shubham Waghmare",
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 14,
+                          fontFamily: 'Overpass'),
+                    )),
+                  ),
+                ],
               ),
               SizedBox(height: 16),
               Container(
@@ -176,5 +207,13 @@ class CategorieTile extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class NoGLowBehavior extends ScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
   }
 }
